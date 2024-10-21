@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Form Input</h2>
+<form action="input.php" onsubmit="return validateForm(event)" method="post">
+    <label for="kecamatan">Kecamatan:</label><br>
+    <input type="text" id="kecamatan" name="kecamatan" required><br>
+
+    <label for="luas">Luas:</label><br>
+    <input type="number" id="luas" name="luas" required><br>
+
+    <label for="jumlah_penduduk">Jumlah Penduduk:</label><br>
+    <input type="number" id="jumlah_penduduk" name="jumlah_penduduk" required><br>
+
+    <label for="longitude"> Longitude:</label><br>
+    <input type="number" step="any" id="longitude" name="longitude" required><br>
+
+    <label for="latitude">Latitude:</label><br>
+    <input type="number" step="any" id="latitude" name="latitude" required><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<p id="informasi" style="color: red;"></p>
+
+<script>
+function validateForm(event) {
+    let luas = document.getElementById("luas").value;
+    let longitude = document.getElementById("longitude").value;
+    let latitude = document.getElementById("latitude").value;
+    let text = "";
+
+    // Validasi input kosong
+    if (!luas || !longitude || !latitude) {
+        text = "Semua kolom harus diisi.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault(); // Mencegah form disubmit
+        return false;
+    }
+
+    // Validasi input luas
+    if (isNaN(luas) || luas <= 0) {
+        text = "Data luas harus angka dan tidak boleh bernilai negatif.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+
+    // Validasi input longitude
+    if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+        text = "Longitude harus berupa angka antara -180 dan 180.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+
+    // Validasi input latitude
+    if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+        text = "Latitude harus berupa angka antara -90 dan 90.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+
+    return true; // Jika semua validasi lolos, form dapat disubmit
+}
+</script>
+
+</body>
+</html>
